@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painting Listing - Acme Arts</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/scripts.js" defer></script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">Acme Arts</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="painting_listing.html">Painting Listing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="search_and_sort.html">Search and Sort</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="insert_update_delete.html">Painting Management</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <h2 class="my-4">Our Paintings</h2>
+
+    <!-- Sort Options -->
+    <div class="form-group">
+        <label for="sort">Sort by:</label>
+        <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable('paintingTable', this.value)">
+            <option value="title">Title</option>
+            <option value="artist">Artist</option>
+            <option value="year">Year</option>
+        </select>
+    </div>
+
+    <table class="table table-striped" id="paintingTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Style</th>
+                <th>Year</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Starry Night</td>
+                <td>Vincent van Gogh</td>
+                <td>Post-Impressionism</td>
+                <td>1889</td>
+            </tr>
+            <tr>
+                <td>Mona Lisa</td>
+                <td>Leonardo da Vinci</td>
+                <td>Renaissance</td>
+                <td>1503</td>
+            </tr>
+            <tr>
+                <td>The Scream</td>
+                <td>Edvard Munch</td>
+                <td>Expressionism</td>
+                <td>1893</td>
+            </tr>
+            <tr>
+                <td>Guernica</td>
+                <td>Pablo Picasso</td>
+                <td>Cubism</td>
+                <td>1937</td>
+            </tr>
+            <tr>
+                <td>The Persistence of Memory</td>
+                <td>Salvador Dalí</td>
+                <td>Surrealism</td>
+                <td>1931</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Sudakaz IT Services</h5>
+                <p>
+                    Your trusted partner in IT services. We provide comprehensive solutions tailored to meet the needs of modern businesses.
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="index.html" class="text-white">Home</a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="text-white">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Follow Us</h5>
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="https://www.facebook.com/" target="_blank" class="text-white"><i class="bi bi-facebook"></i> Facebook</a>
+                </li>
+                <li>
+                    <a href="https://x.com/?lang=en" class="text-white" target="_blank"><i class="bi bi-twitter"></i> Twitter</a>
+                </li>
+                <li>
+                    <a href="https://au.linkedin.com/" target="_blank" class="text-white"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                </li>
+                <li>
+                    <a href="https://github.com/" target="_blank" class="text-white"><i class="bi bi-github"></i> GitHub</a>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3 bg-secondary">
+        © 2024 Sudakaz IT Services. All rights reserved.
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

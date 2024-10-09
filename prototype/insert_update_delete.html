@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insert/Update/Delete - Acme Arts</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/scripts.js" defer></script> 
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="index.html">Acme Arts</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="painting_listing.html">Painting Listing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="search_and_sort.html">Search and Sort</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="insert_update_delete.html">Painting Management</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container ">
+    <h2 class="my-4">Manage Paintings</h2>
+
+    <!-- Section for Inserting a New Painting -->
+    <h4>Insert a New Painting</h4>
+    <form action="manage_paintings.php" method="POST">
+        <div class="form-group">
+            <label for="newTitle">Painting Title</label>
+            <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter Painting Title" required>
+        </div>
+        <div class="form-group">
+            <label for="newArtist">Artist Name</label>
+            <input type="text" class="form-control" id="newArtist" name="artist" placeholder="Enter Artist Name" required>
+        </div>
+        <div class="form-group">
+            <label for="newStyle">Painting Style</label>
+            <input type="text" class="form-control" id="newStyle" name="style" placeholder="Enter Painting Style" required>
+        </div>
+        <div class="form-group">
+            <label for="newYear">Year of Completion</label>
+            <input type="number" class="form-control" id="newYear" name="year" placeholder="Enter Year of Completion" required>
+        </div>
+        <button type="submit" name="insert" class="btn btn-success">Insert</button>
+    </form>
+
+    <hr>
+
+    <!-- Section for Searching a Painting to Update or Delete -->
+    <h4>Search for a Painting to Update or Delete</h4>
+    <form action="search_for_painting.php" method="POST">
+        <div class="form-group">
+            <label for="searchTitle">Painting Title</label>
+            <input type="text" class="form-control" id="searchTitle" name="search_title" placeholder="Enter Painting Title" required>
+        </div>
+        <button type="submit" name="search" class="btn btn-success">Search</button>
+    </form>
+
+    <div class="mt-4">
+        <h5>Selected Painting Details</h5>
+        <form action="manage_paintings.php" method="POST">
+            <div class="form-group">
+                <label for="updateTitle">New Title</label>
+                <input type="text" class="form-control" id="updateTitle" name="update_title" placeholder="Update Painting Title">
+            </div>
+            <div class="form-group">
+                <label for="updateArtist">New Artist Name</label>
+                <input type="text" class="form-control" id="updateArtist" name="update_artist" placeholder="Update Artist Name">
+            </div>
+            <div class="form-group">
+                <label for="updateStyle">New Painting Style</label>
+                <input type="text" class="form-control" id="updateStyle" name="update_style" placeholder="Update Painting Style">
+            </div>
+            <div class="form-group">
+                <label for="updateYear">New Year of Completion</label>
+                <input type="number" class="form-control" id="updateYear" name="update_year" placeholder="Update Year of Completion">
+            </div>
+            <button type="submit" name="update" class="btn btn-success">Update</button>
+            <button type="submit" name="delete" class="btn btn-success">Delete</button>
+        </form>
+    </div>
+</div>
+
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Sudakaz IT Services</h5>
+                <p>
+                    Your trusted partner in IT services. We provide comprehensive solutions tailored to meet the needs of modern businesses.
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="index.html" class="text-white">Home</a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="text-white">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Follow Us</h5>
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="https://www.facebook.com/" target="_blank" class="text-white"><i class="bi bi-facebook"></i> Facebook</a>
+                </li>
+                <li>
+                    <a href="https://x.com/?lang=en" class="text-white" target="_blank"><i class="bi bi-twitter"></i> Twitter</a>
+                </li>
+                <li>
+                    <a href="https://au.linkedin.com/" target="_blank" class="text-white"><i class="bi bi-linkedin"></i> LinkedIn</a>
+                </li>
+                <li>
+                    <a href="https://github.com/" target="_blank" class="text-white"><i class="bi bi-github"></i> GitHub</a>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3 bg-secondary">
+        © 2024 Sudakaz IT Services. All rights reserved.
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

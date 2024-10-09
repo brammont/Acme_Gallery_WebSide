@@ -1,0 +1,34 @@
+/* General Styling */
+html, body {
+    height: 100%; /* Set height to 100% for full viewport */
+    margin: 0; /* Remove default margin */
+}
+
+.container-fluid {
+    display: flex; /* Use Flexbox for layout */
+    flex-direction: column; /* Stack children vertically */
+    height: 100%; /* Make the Bootstrap container take the full height */
+}
+
+.container {
+    flex: 1; /* Allow the container to grow and take remaining space */
+    height: 100%
+}
+
+.footer {
+    background-color: #343a40; /* Footer background color */
+    color: white; /* Footer text color */
+    padding: 10px 0; /* Padding for the footer */
+    text-align: center; /* Center the footer text */
+}
+
+/* Additional Styling as Needed */
+.hero-section {
+    color: white;
+    padding: 100px 0; /* Add vertical padding to the hero section */
+    text-align: center;
+}
+
+.btn {
+    margin-top: 10px; /* Add margin to buttons if needed */
+}
