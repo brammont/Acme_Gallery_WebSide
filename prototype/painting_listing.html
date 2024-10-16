@@ -34,22 +34,23 @@
     </div>
 </nav>
 
+<main>
+    
+<div class="container">
+        <h2 class="my-4">Our Paintings</h2>
 
-    <div class="container ">
-        <div class="container">
-            <h2 class="my-4">Our Paintings</h2>
-
-            <!-- Sort Options -->
-            <div class="form-group">
-                <label for="sort">Sort by:</label>
-                <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable('paintingTable', this.value)">
-                    <option value="title">Title</option>
-                    <option value="artist">Artist</option>
-                    <option value="year">Year</option>
-                </select>
-            </div>
-            <div class="table-responsive">
-            <table class="table" id="paintingTable">
+        <!-- Sort Options -->
+        <div class="form-group">
+            <label for="sort">Sort by:</label>
+            <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable('paintingTable', this.value)">
+                <option value="title">Title</option>
+                <option value="artist">Artist</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+        <div class="results mt-5">
+            <h3>Search Results</h3>
+            <table class="table table-striped" id="paintingTable">
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -65,38 +66,76 @@
                         <td>Vincent van Gogh</td>
                         <td>Post-Impressionism</td>
                         <td>1889</td>
-                        <td><img src="assets/img/.jpg" class="img-thumbnail" alt="..."></td>
+                        <td>
+                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgStarryNight" aria-expanded="false" aria-controls="imgStarryNight">
+                                Toggle Image
+                            </button>
+                            <div class="collapse" id="imgStarryNight">
+                                <img src="assets/img/img1.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="Starry Night">
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td>Mona Lisa</td>
                         <td>Leonardo da Vinci</td>
                         <td>Renaissance</td>
                         <td>1503</td>
+                        <td>
+                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgMonaLisa" aria-expanded="false" aria-controls="imgMonaLisa">
+                                Toggle Image
+                            </button>
+                            <div class="collapse" id="imgMonaLisa">
+                                <img src="assets/img/img2.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="Mona Lisa">
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td>The Scream</td>
                         <td>Edvard Munch</td>
                         <td>Expressionism</td>
                         <td>1893</td>
+                        <td>
+                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgTheScream" aria-expanded="false" aria-controls="imgTheScream">
+                                Toggle Image
+                            </button>
+                            <div class="collapse" id="imgTheScream">
+                                <img src="assets/img/img3.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="The Scream">
+                            </div>
+                        </td>
                     </tr>
                     <tr>
-                        <td>Guernica</td>
+                        <td>The Guernica</td>
                         <td>Pablo Picasso</td>
                         <td>Cubism</td>
                         <td>1937</td>
+                        <td>
+                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgTheGuernica" aria-expanded="false" aria-controls="imgTheGuernica">
+                                Toggle Image
+                            </button>
+                            <div class="collapse" id="TheGuernica">
+                                <img src="assets/img/img4.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="The Guernica">
+                            </div>
+                        </td>
                     </tr>
                     <tr>
                         <td>The Persistence of Memory</td>
                         <td>Salvador Dalí</td>
                         <td>Surrealism</td>
                         <td>1931</td>
+                        <td>
+                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgThePersistenceofMemory" aria-expanded="false" aria-controls="imgThePersistenceofMemory">
+                                Toggle Image
+                            </button>
+                            <div class="collapse" id="imgThePersistenceofMemory">
+                                <img src="assets/img/img5.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="The Persistence of Memory">
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-</div>
-
+</main>
 <footer class="bg-dark text-white text-center text-lg-start mt-5">
     <div class="container p-4">
         <div class="row">
