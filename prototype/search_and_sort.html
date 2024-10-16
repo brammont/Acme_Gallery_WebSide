@@ -34,64 +34,64 @@
     </div>
 </nav>
 
-<div class="container">
-    <h2 class="my-4">Search and Sort Paintings</h2>
+    <div class="container">
+        <h2 class="my-4">Search and Sort Paintings</h2>
 
-    <!-- Search Form -->
-    <form action="search_and_sort_results.php" method="POST">
-        <div class="form-group">
-            <input type="text" class="form-control" name="search_title" placeholder="Search by painting title" aria-label="Search Painting Title" required>
+        <!-- Search Form -->
+        <form action="search_and_sort_results.php" method="POST">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search_title" placeholder="Search by painting title" aria-label="Search Painting Title" required>
+            </div>
+
+            <!-- Sort Options -->
+            <div class="form-group">
+                <label for="sort">Sort by:</label>
+                <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable('searchResultsTable', this.value)">
+                    <option value="title">Title</option>
+                    <option value="artist">Artist</option>
+                    <option value="year">Year</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success">Search and Sort</button>
+        </form>
+
+        <!-- Display Results -->
+        <div class="results mt-5">
+            <h3>Search Results</h3>
+            <table class="table table-striped" id="searchResultsTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Artist</th>
+                        <th>Style</th>
+                        <th>Year</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- This will be dynamically populated with search results -->
+                    <tr>
+                        <td>Starry Night</td>
+                        <td>Vincent van Gogh</td>
+                        <td>Post-Impressionism</td>
+                        <td>1889</td>
+                    </tr>
+                    <tr>
+                        <td>Mona Lisa</td>
+                        <td>Leonardo da Vinci</td>
+                        <td>Renaissance</td>
+                        <td>1503</td>
+                    </tr>
+                    <tr>
+                        <td>The Scream</td>
+                        <td>Edvard Munch</td>
+                        <td>Expressionism</td>
+                        <td>1893</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-
-        <!-- Sort Options -->
-        <div class="form-group">
-            <label for="sort">Sort by:</label>
-            <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable('searchResultsTable', this.value)">
-                <option value="title">Title</option>
-                <option value="artist">Artist</option>
-                <option value="year">Year</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn btn-success">Search and Sort</button>
-    </form>
-
-    <!-- Display Results -->
-    <div class="results mt-5">
-        <h3>Search Results</h3>
-        <table class="table table-striped" id="searchResultsTable">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Artist</th>
-                    <th>Style</th>
-                    <th>Year</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- This will be dynamically populated with search results -->
-                <tr>
-                    <td>Starry Night</td>
-                    <td>Vincent van Gogh</td>
-                    <td>Post-Impressionism</td>
-                    <td>1889</td>
-                </tr>
-                <tr>
-                    <td>Mona Lisa</td>
-                    <td>Leonardo da Vinci</td>
-                    <td>Renaissance</td>
-                    <td>1503</td>
-                </tr>
-                <tr>
-                    <td>The Scream</td>
-                    <td>Edvard Munch</td>
-                    <td>Expressionism</td>
-                    <td>1893</td>
-                </tr>
-            </tbody>
-        </table>
     </div>
-</div>
 
 
 <footer class="bg-dark text-white text-center text-lg-start mt-5">

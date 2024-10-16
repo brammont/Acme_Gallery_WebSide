@@ -33,68 +33,69 @@
         </ul>
     </div>
 </nav>
+<main>
+    <div class="container ">
+        <h2 class="my-4">Manage Paintings</h2>
 
-<div class="container ">
-    <h2 class="my-4">Manage Paintings</h2>
-
-    <!-- Section for Inserting a New Painting -->
-    <h4>Insert a New Painting</h4>
-    <form action="manage_paintings.php" method="POST">
-        <div class="form-group">
-            <label for="newTitle">Painting Title</label>
-            <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter Painting Title" required>
-        </div>
-        <div class="form-group">
-            <label for="newArtist">Artist Name</label>
-            <input type="text" class="form-control" id="newArtist" name="artist" placeholder="Enter Artist Name" required>
-        </div>
-        <div class="form-group">
-            <label for="newStyle">Painting Style</label>
-            <input type="text" class="form-control" id="newStyle" name="style" placeholder="Enter Painting Style" required>
-        </div>
-        <div class="form-group">
-            <label for="newYear">Year of Completion</label>
-            <input type="number" class="form-control" id="newYear" name="year" placeholder="Enter Year of Completion" required>
-        </div>
-        <button type="submit" name="insert" class="btn btn-success">Insert</button>
-    </form>
-
-    <hr>
-
-    <!-- Section for Searching a Painting to Update or Delete -->
-    <h4>Search for a Painting to Update or Delete</h4>
-    <form action="search_for_painting.php" method="POST">
-        <div class="form-group">
-            <label for="searchTitle">Painting Title</label>
-            <input type="text" class="form-control" id="searchTitle" name="search_title" placeholder="Enter Painting Title" required>
-        </div>
-        <button type="submit" name="search" class="btn btn-success">Search</button>
-    </form>
-
-    <div class="mt-4">
-        <h5>Selected Painting Details</h5>
+        <!-- Section for Inserting a New Painting -->
+        <h4>Insert a New Painting</h4>
         <form action="manage_paintings.php" method="POST">
             <div class="form-group">
-                <label for="updateTitle">New Title</label>
-                <input type="text" class="form-control" id="updateTitle" name="update_title" placeholder="Update Painting Title">
+                <label for="newTitle">Painting Title</label>
+                <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter Painting Title" required>
             </div>
             <div class="form-group">
-                <label for="updateArtist">New Artist Name</label>
-                <input type="text" class="form-control" id="updateArtist" name="update_artist" placeholder="Update Artist Name">
+                <label for="newArtist">Artist Name</label>
+                <input type="text" class="form-control" id="newArtist" name="artist" placeholder="Enter Artist Name" required>
             </div>
             <div class="form-group">
-                <label for="updateStyle">New Painting Style</label>
-                <input type="text" class="form-control" id="updateStyle" name="update_style" placeholder="Update Painting Style">
+                <label for="newStyle">Painting Style</label>
+                <input type="text" class="form-control" id="newStyle" name="style" placeholder="Enter Painting Style" required>
             </div>
             <div class="form-group">
-                <label for="updateYear">New Year of Completion</label>
-                <input type="number" class="form-control" id="updateYear" name="update_year" placeholder="Update Year of Completion">
+                <label for="newYear">Year of Completion</label>
+                <input type="number" class="form-control" id="newYear" name="year" placeholder="Enter Year of Completion" required>
             </div>
-            <button type="submit" name="update" class="btn btn-success">Update</button>
-            <button type="submit" name="delete" class="btn btn-success">Delete</button>
+            <button type="submit" name="insert" class="btn btn-success">Insert</button>
         </form>
-    </div>
+
+        <hr>
+
+        <!-- Section for Searching a Painting to Update or Delete -->
+        <h4>Search for a Painting to Update or Delete</h4>
+        <form action="search_for_painting.php" method="POST">
+            <div class="form-group">
+                <label for="searchTitle">Painting Title</label>
+                <input type="text" class="form-control" id="searchTitle" name="search_title" placeholder="Enter Painting Title" required>
+            </div>
+            <button type="submit" name="search" class="btn btn-success">Search</button>
+        </form>
+
+        <div class="mt-4">
+            <h5>Selected Painting Details</h5>
+            <form action="manage_paintings.php" method="POST">
+                <div class="form-group">
+                    <label for="updateTitle">New Title</label>
+                    <input type="text" class="form-control" id="updateTitle" name="update_title" placeholder="Update Painting Title">
+                </div>
+                <div class="form-group">
+                    <label for="updateArtist">New Artist Name</label>
+                    <input type="text" class="form-control" id="updateArtist" name="update_artist" placeholder="Update Artist Name">
+                </div>
+                <div class="form-group">
+                    <label for="updateStyle">New Painting Style</label>
+                    <input type="text" class="form-control" id="updateStyle" name="update_style" placeholder="Update Painting Style">
+                </div>
+                <div class="form-group">
+                    <label for="updateYear">New Year of Completion</label>
+                    <input type="number" class="form-control" id="updateYear" name="update_year" placeholder="Update Year of Completion">
+                </div>
+                <button type="submit" name="update" class="btn btn-success">Update</button>
+                <button type="submit" name="delete" class="btn btn-success">Delete</button>
+            </form>
+        </div>
 </div>
+</main>
 
 <footer class="bg-dark text-white text-center text-lg-start mt-5">
     <div class="container p-4">

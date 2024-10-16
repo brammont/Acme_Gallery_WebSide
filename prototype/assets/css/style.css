@@ -8,6 +8,7 @@ html, body {
     display: flex; /* Use Flexbox for layout */
     flex-direction: column; /* Stack children vertically */
     height: 100%; /* Make the Bootstrap container take the full height */
+    margin-top: 1rem;
 }
 
 .container {
