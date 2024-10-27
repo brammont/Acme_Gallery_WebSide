@@ -6,20 +6,17 @@
     <title>Painting Listing - Acme Arts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/scripts.js" defer></script>
-
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="Index.html">Acme Arts</a>
+    <a class="navbar-brand" href="index.html">Acme Arts</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="Index.html">Home</a>
+                <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link active" href="painting_listing.html">Painting Listing</a>
@@ -33,16 +30,12 @@
         </ul>
     </div>
 </nav>
-
 <main>
-    
-<div class="container">
+    <div class="container">
         <h2 class="my-4">Our Paintings</h2>
-
-        <!-- Sort Options -->
         <div class="form-group">
             <label for="sort">Sort by:</label>
-            <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable('paintingTable', this.value)">
+            <select class="form-control" id="sort" name="sort_criteria" onchange="sortTable()">
                 <option value="title">Title</option>
                 <option value="artist">Artist</option>
                 <option value="year">Year</option>
@@ -60,77 +53,8 @@
                         <th>Picture</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Starry Night</td>
-                        <td>Vincent van Gogh</td>
-                        <td>Post-Impressionism</td>
-                        <td>1889</td>
-                        <td>
-                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgStarryNight" aria-expanded="false" aria-controls="imgStarryNight">
-                                Toggle Image
-                            </button>
-                            <div class="collapse" id="imgStarryNight">
-                                <img src="assets/img/img1.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="Starry Night">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Mona Lisa</td>
-                        <td>Leonardo da Vinci</td>
-                        <td>Renaissance</td>
-                        <td>1503</td>
-                        <td>
-                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgMonaLisa" aria-expanded="false" aria-controls="imgMonaLisa">
-                                Toggle Image
-                            </button>
-                            <div class="collapse" id="imgMonaLisa">
-                                <img src="assets/img/img2.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="Mona Lisa">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>The Scream</td>
-                        <td>Edvard Munch</td>
-                        <td>Expressionism</td>
-                        <td>1893</td>
-                        <td>
-                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgTheScream" aria-expanded="false" aria-controls="imgTheScream">
-                                Toggle Image
-                            </button>
-                            <div class="collapse" id="imgTheScream">
-                                <img src="assets/img/img3.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="The Scream">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>The Guernica</td>
-                        <td>Pablo Picasso</td>
-                        <td>Cubism</td>
-                        <td>1937</td>
-                        <td>
-                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgTheGuernica" aria-expanded="false" aria-controls="imgTheGuernica">
-                                Toggle Image
-                            </button>
-                            <div class="collapse" id="imgTheGuernica">
-                                <img src="assets/img/img4.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="The Guernica">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>The Persistence of Memory</td>
-                        <td>Salvador Dalí</td>
-                        <td>Surrealism</td>
-                        <td>1931</td>
-                        <td>
-                            <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#imgThePersistenceofMemory" aria-expanded="false" aria-controls="imgThePersistenceofMemory">
-                                Toggle Image
-                            </button>
-                            <div class="collapse" id="imgThePersistenceofMemory">
-                                <img src="assets/img/img5.jpg" class="img-thumbnail" style="height: 50%; width: 50%" alt="The Persistence of Memory">
-                            </div>
-                        </td>
-                    </tr>
+                <tbody id="paintingList">
+                    <!-- Data will be inserted here by JavaScript -->
                 </tbody>
             </table>
         </div>
@@ -159,18 +83,18 @@
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Follow Us</h5>
                 <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="https://www.facebook.com/" target="_blank" class="text-white"><i class="bi bi-facebook"></i> Facebook</a>
-                </li>
-                <li>
-                    <a href="https://x.com/?lang=en" class="text-white" target="_blank"><i class="bi bi-twitter"></i> Twitter</a>
-                </li>
-                <li>
-                    <a href="https://au.linkedin.com/" target="_blank" class="text-white"><i class="bi bi-linkedin"></i> LinkedIn</a>
-                </li>
-                <li>
-                    <a href="https://github.com/" target="_blank" class="text-white"><i class="bi bi-github"></i> GitHub</a>
-                </li>
+                    <li>
+                        <a href="https://www.facebook.com/" target="_blank" class="text-white">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="https://x.com/?lang=en" target="_blank" class="text-white">Twitter</a>
+                    </li>
+                    <li>
+                        <a href="https://au.linkedin.com/" target="_blank" class="text-white">LinkedIn</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/" target="_blank" class="text-white">GitHub</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -179,8 +103,8 @@
         © 2024 Sudakaz IT Services. All rights reserved.
     </div>
 </footer>
-
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/scripts.js" defer></script>
 </body>
 </html>

@@ -1,35 +1,84 @@
 /* General Styling */
 html, body {
-    height: 100%; /* Set height to 100% for full viewport */
-    margin: 0; /* Remove default margin */
+    height: 100%;
+    margin: 0;
 }
 
 .container-fluid {
-    display: flex; /* Use Flexbox for layout */
-    flex-direction: column; /* Stack children vertically */
-    height: 100%; /* Make the Bootstrap container take the full height */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     margin-top: 1rem;
 }
 
 .container {
-    flex: 1; /* Allow the container to grow and take remaining space */
-    height: 100%
+    flex: 1;
+    height: 100%;
 }
 
 .footer {
-    background-color: #343a40; /* Footer background color */
-    color: white; /* Footer text color */
-    padding: 10px 0; /* Padding for the footer */
-    text-align: center; /* Center the footer text */
-}
-
-/* Additional Styling as Needed */
-.hero-section {
+    background-color: #343a40;
     color: white;
-    padding: 100px 0; /* Add vertical padding to the hero section */
+    padding: 10px 0;
     text-align: center;
 }
 
+/* Hero Section Styling */
+.hero-section {
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Dark overlay for improved text readability */
+    z-index: 1;
+}
+
+.hero-section h1,
+.hero-section p,
+.hero-section .btn {
+    position: relative;
+    z-index: 2;
+    color: #f1f1f1; /* Light color for better readability */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Subtle shadow for contrast */
+}
+
+/* Button Styling */
 .btn {
-    margin-top: 10px; /* Add margin to buttons if needed */
+    margin-top: 10px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Custom Styling for the View Paintings Button */
+.btn-success {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+    font-size: 1.2em; /* Slightly larger font for visibility */
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Description Styling for Gallery Images */
+.gallery-description {
+    color: #f1f1f1; /* Light color for better readability */
+    font-size: 1.1em;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Subtle shadow for contrast */
+    margin-top: 10px;
+    text-align: center;
 }
