@@ -15,8 +15,49 @@ if ($conn->connect_error) {
     exit();
 }
 
+// Fetch search criteria from the JSON body
+$data = json_decode(file_get_contents("php://input"), true);
+
+$conditions = [];
+$params = [];
+
+// Prepare conditions based on search criteria
+if (!empty($data['title'])) {
+    $conditions[] = 'title LIKE ?';
+    $params[] = '%' . $conn->real_escape_string($data['title']) . '%';
+}
+
+if (!empty($data['artist'])) {
+    $conditions[] = 'artist LIKE ?';
+    $params[] = '%' . $conn->real_escape_string($data['artist']) . '%';
+}
+
+if (!empty($data['year'])) {
+    $conditions[] = 'year = ?';
+    $params[] = (int)$data['year'];
+}
+
+// Build SQL query
 $sql = "SELECT id, title, artist, year, image FROM paintings";
-$result = $conn->query($sql);
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(' AND ', $conditions);
+}
+
+$stmt = $conn->prepare($sql);
+
+// Bind parameters if conditions exist
+if (!empty($params)) {
+    // Create a string for the types of the parameters
+    $types = str_repeat('s', count($params)); // Assuming all parameters are strings
+    if (isset($data['year']) && !empty($data['year'])) {
+        // If year is an integer, we need to bind it as 'i'
+        $types = str_replace('s', 'i', $types); // Change string type to integer for the year
+    }
+    $stmt->bind_param($types, ...$params);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
 
 $paintings = [];
 if ($result->num_rows > 0) {
@@ -28,3 +69,4 @@ if ($result->num_rows > 0) {
 echo json_encode($paintings);
 $conn->close();
 ?>
+ 

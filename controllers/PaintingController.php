@@ -1,8 +1,7 @@
 <?php
-// controllers/PaintingController.php
-include '../includes/db_connect.php';
-include '../classes/Painting.php';
-
+header('Content-Type: application/json');
+include 'includes/db_connect.php';
+include 'classes/Painting.php';
 $painting = new Painting($conn);
 
 $action = $_POST['action'];

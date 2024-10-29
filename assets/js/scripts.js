@@ -23,13 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Sort and display paintings by year and artist
                 paintings.sort((a, b) => a.year - b.year || a.artist.localeCompare(b.artist)).forEach(painting => {
-                    let listItem = document.createElement("div");
+                    let listItem = document.createElement("tr");
                     listItem.innerHTML = `
-                        <h3>${painting.title}</h3>
-                        <p><strong>Artist:</strong> ${painting.artist}</p>
-                        <p><strong>Year:</strong> ${painting.year}</p>
-                        <img src="assets/img/${painting.image}" alt="${painting.title}" />
-                    `;
+                        <td>Tittle: <p>${painting.title}</p></td>
+                        <td>Artist: <p>${painting.artist}</p></td>
+                        <td>Year: <p>${painting.year}</p></td>
+                        <td>
+                            <div id="img${painting.title.replace(/\s/g, '')}">
+                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
+                            </div>
+                        </td>`;
                     paintingList.appendChild(listItem);
                 });
             } catch (error) {
@@ -56,60 +59,68 @@ function sortTable() {
             paintingList.innerHTML = "";  // Clear existing entries
 
             data.forEach(painting => {
-                let listItem = document.createElement("div");
+                let listItem = document.createElement("tr");
                 listItem.innerHTML = `
-                    <h3>${painting.title}</h3>
-                    <p><strong>Artist:</strong> ${painting.artist}</p>
-                    <p><strong>Year:</strong> ${painting.year}</p>
-                    <img src="assets/img/${painting.image}" alt="${painting.title}" />
-                `;
+                    <td>Title: <p>${painting.title}</p></td>
+                        <td>Artist: <p>${painting.artist}</p></td>
+                        <td>Year: <p>${painting.year}</p></td>
+                        <td>
+                            <div id="img${painting.title.replace(/\s/g, '')}">
+                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
+                            </div>
+                        </td>`;
                 paintingList.appendChild(listItem);
             });
         })
         .catch(error => console.error("Error fetching or sorting paintings:", error));
 }
 function fetchAndDisplayData() {
-    const searchTitle = document.getElementById("searchTitle").value.trim().toLowerCase();
-    const sortBy = document.getElementById("sort").value;
+    const searchTitle = document.getElementById("searchTitle").value.trim();
+    const searchArtist = document.getElementById("searchArtist").value.trim();
+    const searchYear = document.getElementById("searchYear").value.trim();
 
-    fetch("includes/fetch_paintings.php")
-        .then(response => response.json())
-        .then(data => {
-            // Filter data by search title
-            const filteredData = data.filter(painting => {
-                return painting.title.toLowerCase().includes(searchTitle);
-            });
+    const searchCriteria = {
+        title: searchTitle,
+        artist: searchArtist,
+        year: searchYear ? Number(searchYear) : null
+    };
 
-            // Sort data
-            if (sortBy === "artist") {
-                filteredData.sort((a, b) => a.artist.localeCompare(b.artist));
-            } else if (sortBy === "year") {
-                filteredData.sort((a, b) => a.year - b.year);
-            } else if (sortBy === "title") {
-                filteredData.sort((a, b) => a.title.localeCompare(b.title));
-            }
+    fetch("includes/fetch_paintings.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(searchCriteria)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok: ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const paintingList = document.getElementById("paintingList");
+        paintingList.innerHTML = ""; // Clear existing list
 
-            // Display data in the table
-            const paintingList = document.getElementById("paintingList");
-            paintingList.innerHTML = "";  // Clear previous results
-
-            filteredData.forEach(painting => {
+        if (data.length === 0) {
+            paintingList.innerHTML = `<tr><td colspan="4">No paintings found matching the search criteria.</td></tr>`;
+        } else {
+            data.forEach(painting => {
                 let listItem = document.createElement("tr");
                 listItem.innerHTML = `
-                    <td>${painting.title}</td>
-                    <td>${painting.artist}</td>
-                    <td>${painting.style || "N/A"}</td>
-                    <td>${painting.year}</td>
-                    <td>
-                        <div  id="img${painting.title.replace(/\s/g, '')}">
-                            <img src="assets/img/${painting.image}" class="img-fluid style="height: 50%; width: 50%" alt="${painting.title}">
-                        </div>
-                    </td>
-                `;
+                    <td>Tittle: <p>${painting.title}</p></td>
+                        <td>Artist: <p>${painting.artist}</p></td>
+                        <td>Year: <p>${painting.year}</p></td>
+                        <td>
+                            <div id="img${painting.title.replace(/\s/g, '')}">
+                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
+                            </div>
+                        </td>`;
                 paintingList.appendChild(listItem);
             });
-        })
-        .catch(error => console.error("Error fetching paintings:", error));
+        }
+    })
+    .catch(error => console.error("Error fetching paintings:", error));
 }
 
 // Function painting listing
@@ -117,24 +128,32 @@ document.addEventListener('DOMContentLoaded', function() {
     fetch('controllers/PaintingController.php', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
         },
-        body: 'action=getAllPaintings'
+        body: JSON.stringify({ action: 'getAllPaintings' }) // Use JSON.stringify for JSON format
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
     .then(data => {
         const tableBody = document.querySelector('#paintingsTable tbody');
-        data.forEach(painting => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${painting.title}</td>
-                <td>${painting.artist}</td>
-                <td>${painting.year}</td>
-                <td><img src="assets/img/${painting.image} class="img-flued"" alt="${painting.title} " ></td>
-            `;
-            tableBody.appendChild(row);
+        data.paintings.forEach(painting => { // Ensure you access 'data.paintings' 
+            let listItem = document.createElement("tr");
+                    listItem.innerHTML = `
+                        <td>Title: <p>${painting.title}</p></td>
+                        <td>Artist: <p>${painting.artist}</p></td>
+                        <td>Year: <p>${painting.year}</p></td>
+                        <td>
+                            <div id="img${painting.title.replace(/\s/g, '')}">
+                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
+                            </div>
+                        </td>`;
+            tableBody.appendChild(listItem);
         });
-    });
+    })
 });
 
 // Function Manage Painting 
@@ -149,14 +168,15 @@ function fetchPaintings() {
             data.forEach(painting => {
                 paintingList.append(`
                     <tr>
-                        <td>${painting.title}</td>
-                        <td>${painting.artist}</td>
-                        <td>${painting.year}</td>
-                        <td><img src="assets/img/${painting.image}" alt="${painting.title}" width="100"></td>
+                        <td>Title: <p>${painting.title}</p></td>
+                        <td>Artist: <p>${painting.artist}</p></td>
+                        <td>Year: <p>${painting.year}</p></td>
                         <td>
-                            <button class="btn btn-info" onclick="editPainting(${painting.id})">Edit</button>
+                            <div id="img${painting.title.replace(/\s/g, '')}">
+                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
+                            </div>
                         </td>
-                    </tr>
+                      </tr>  
                 `);
             });
         },
@@ -175,7 +195,7 @@ function addPainting() {
     formData.append('image', $('#image')[0].files[0]);
 
     $.ajax({
-        url: 'includes/manage_paintings.php',
+        url: 'includes/fecth_paintings.php',
         method: 'POST',
         data: formData,
         contentType: false,
@@ -241,7 +261,7 @@ function deletePainting() {
     const id = $('#paintingId').val();
     if (id) {
         $.ajax({
-            url: 'includes/manage_paintings.php',
+            url: 'includes/fetch_paintings.php',
             method: 'POST',
             data: { action: 'delete', id: id },
             success: function(response) {
