@@ -1,5 +1,6 @@
 <?php
 // classes/Painting.php
+
 class Painting {
     private $conn;
 
@@ -7,31 +8,28 @@ class Painting {
         $this->conn = $db;
     }
 
-    public function getAllPaintings() {
-        $sql = "SELECT * FROM paintings";
-        $result = $this->conn->query($sql);
-        return $result;
-    }
-
-    public function insertPainting($title, $artist, $year, $image) {
+    public function create($title, $artist, $year, $image) {
         $sql = "INSERT INTO paintings (title, artist, year, image) VALUES (?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssis", $title, $artist, $year, $image);
-        return $stmt->execute();
+        return $stmt->execute([$title, $artist, $year, $image]);
     }
 
-    public function updatePainting($id, $title, $artist, $year, $image) {
-        $sql = "UPDATE paintings SET title=?, artist=?, year=?, image=? WHERE id=?";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssisi", $title, $artist, $year, $image, $id);
-        return $stmt->execute();
+    public function read() {
+        $sql = "SELECT * FROM paintings";
+        $stmt = $this->conn->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function deletePainting($id) {
-        $sql = "DELETE FROM paintings WHERE id=?";
+    public function update($id, $title, $artist, $year, $image) {
+        $sql = "UPDATE paintings SET title = ?, artist = ?, year = ?, image = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("i", $id);
-        return $stmt->execute();
+        return $stmt->execute([$title, $artist, $year, $image, $id]);
+    }
+
+    public function delete($id) {
+        $sql = "DELETE FROM paintings WHERE id = ?";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([$id]);
     }
 }
 ?>

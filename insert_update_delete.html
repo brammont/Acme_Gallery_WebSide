@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insert/Update/Delete - Acme Arts</title>
+    <title>Painting Management - Acme Arts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/scripts.js" defer></script> 
-
 </head>
 <body>
 
+<!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="Index.html">Acme Arts</a>
+    <a class="navbar-brand" href="index.html">Acme Arts</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="Index.html">Home</a>
+                <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="painting_listing.html">Painting Listing</a>
@@ -33,70 +32,51 @@
         </ul>
     </div>
 </nav>
-<main>
-    <div class="container ">
-        <h2 class="my-4">Manage Paintings</h2>
 
-        <!-- Section for Inserting a New Painting -->
-        <h4>Insert a New Painting</h4>
-        <form action="manage_paintings.php" method="POST">
-            <div class="form-group">
-                <label for="newTitle">Painting Title</label>
-                <input type="text" class="form-control" id="newTitle" name="title" placeholder="Enter Painting Title" required>
-            </div>
-            <div class="form-group">
-                <label for="newArtist">Artist Name</label>
-                <input type="text" class="form-control" id="newArtist" name="artist" placeholder="Enter Artist Name" required>
-            </div>
-            <div class="form-group">
-                <label for="newStyle">Painting Style</label>
-                <input type="text" class="form-control" id="newStyle" name="style" placeholder="Enter Painting Style" required>
-            </div>
-            <div class="form-group">
-                <label for="newYear">Year of Completion</label>
-                <input type="number" class="form-control" id="newYear" name="year" placeholder="Enter Year of Completion" required>
-            </div>
-            <button type="submit" name="insert" class="btn btn-success">Insert</button>
-        </form>
-
-        <hr>
-
-        <!-- Section for Searching a Painting to Update or Delete -->
-        <h4>Search for a Painting to Update or Delete</h4>
-        <form action="search_for_painting.php" method="POST">
-            <div class="form-group">
-                <label for="searchTitle">Painting Title</label>
-                <input type="text" class="form-control" id="searchTitle" name="search_title" placeholder="Enter Painting Title" required>
-            </div>
-            <button type="submit" name="search" class="btn btn-success">Search</button>
-        </form>
-
-        <div class="mt-4">
-            <h5>Selected Painting Details</h5>
-            <form action="manage_paintings.php" method="POST">
-                <div class="form-group">
-                    <label for="updateTitle">New Title</label>
-                    <input type="text" class="form-control" id="updateTitle" name="update_title" placeholder="Update Painting Title">
-                </div>
-                <div class="form-group">
-                    <label for="updateArtist">New Artist Name</label>
-                    <input type="text" class="form-control" id="updateArtist" name="update_artist" placeholder="Update Artist Name">
-                </div>
-                <div class="form-group">
-                    <label for="updateStyle">New Painting Style</label>
-                    <input type="text" class="form-control" id="updateStyle" name="update_style" placeholder="Update Painting Style">
-                </div>
-                <div class="form-group">
-                    <label for="updateYear">New Year of Completion</label>
-                    <input type="number" class="form-control" id="updateYear" name="update_year" placeholder="Update Year of Completion">
-                </div>
-                <button type="submit" name="update" class="btn btn-success">Update</button>
-                <button type="submit" name="delete" class="btn btn-success">Delete</button>
-            </form>
+<!-- Main Content -->
+<div class="container mt-5">
+    <h2 class="my-4">Painting Management</h2>
+    
+    <!-- Form for Adding or Updating a Painting -->
+    <form id="paintingForm" onsubmit="event.preventDefault();">
+        <input type="hidden" id="paintingId">
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" required>
         </div>
-</div>
-</main>
+        <div class="form-group">
+            <label for="artist">Artist</label>
+            <input type="text" class="form-control" id="artist" required>
+        </div>
+        <div class="form-group">
+            <label for="year">Year</label>
+            <input type="number" class="form-control" id="year" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Image</label>
+            <input type="file" class="form-control" id="image">
+        </div>
+        <button type="button" class="btn btn-success" onclick="submitPainting()">Add Painting</button>
+        <button type="button" class="btn btn-primary" onclick="updatePainting()">Update Painting</button>
+    </form>
 
+    <!-- Table for Viewing and Managing Paintings -->
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="paintingList">
+            <!-- Painting list will be populated here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Footer -->
 <footer class="bg-dark text-white text-center text-lg-start mt-5">
     <div class="container p-4">
         <div class="row">
@@ -109,29 +89,17 @@
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Quick Links</h5>
                 <ul class="list-unstyled mb-0">
-                    <li>
-                        <a href="index.html" class="text-white">Home</a>
-                    </li>
-                    <li>
-                        <a href="contact.html" class="text-white">Contact</a>
-                    </li>
+                    <li><a href="index.html" class="text-white">Home</a></li>
+                    <li><a href="contact.html" class="text-white">Contact</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Follow Us</h5>
                 <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="https://www.facebook.com/" target="_blank" class="text-white"><i class="bi bi-facebook"></i> Facebook</a>
-                </li>
-                <li>
-                    <a href="https://x.com/?lang=en" class="text-white" target="_blank"><i class="bi bi-twitter"></i> Twitter</a>
-                </li>
-                <li>
-                    <a href="https://au.linkedin.com/" target="_blank" class="text-white"><i class="bi bi-linkedin"></i> LinkedIn</a>
-                </li>
-                <li>
-                    <a href="https://github.com/" target="_blank" class="text-white"><i class="bi bi-github"></i> GitHub</a>
-                </li>
+                    <li><a href="https://www.facebook.com/" target="_blank" class="text-white">Facebook</a></li>
+                    <li><a href="https://x.com/?lang=en" target="_blank" class="text-white">Twitter</a></li>
+                    <li><a href="https://au.linkedin.com/" target="_blank" class="text-white">LinkedIn</a></li>
+                    <li><a href="https://github.com/" target="_blank" class="text-white">GitHub</a></li>
                 </ul>
             </div>
         </div>
@@ -143,5 +111,6 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/insert_update_delete.js" defer></script>
 </body>
 </html>
