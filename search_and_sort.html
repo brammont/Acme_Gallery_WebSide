@@ -54,21 +54,15 @@
             <button type="button" class="btn btn-success" onclick="fetchAndDisplayData()">Search and Sort</button>
         </form>
 
-        <div class="results mt-5">
-            <h3>Search Results</h3>
-            <table class="table table-striped" id="searchResultsTable">
+        <div class="results">
+            <h2 class="my-4">Search Results</h2>
+            <table class="table table-responsive-lg" id="searchResultsTable">
                 <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Artist</th>
-                        <th>Style</th>
-                        <th>Year</th>
-                        <th>Picture</th>
-                    </tr>
-                </thead>
-                <tbody id="paintingList">
+                     <tbody id="paintingList">
                     <!-- Data will be dynamically injected here -->
                 </tbody>
+                </thead>
+               
             </table>
         </div>
     </div>

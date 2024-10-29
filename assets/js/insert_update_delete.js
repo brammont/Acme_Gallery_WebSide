@@ -1,106 +1,150 @@
-const apiUrl = 'includes/manage_paintings.php'; // Set the API endpoint for CRUD operations
+// JavaScript code to interact with PHP and handle CRUD operations
+// Fetch and display paintings on page load
+document.addEventListener("DOMContentLoaded", fetchPaintings);
 
-// Function to load paintings from the database
-function loadPaintings() {
-    fetch(apiUrl, {
-        method: 'POST',
+// Function to fetch paintings from the server
+function fetchPaintings() {
+    fetch("includes/manage_paintings.php", {
+        method: "POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: new URLSearchParams({ action: 'fetch' })
+        body: "action=fetch"
     })
-    .then(response => response.text())
-    .then(text => {
-        console.log("Raw response from loadPaintings:", text);
-        let data;
-        try {
-            data = JSON.parse(text); // Attempt to parse JSON
-        } catch (error) {
-            console.error("Parsing error in loadPaintings:", error);
-            return;
-        }
+    .then(response => response.json())
+    .then(data => {
         if (data.success) {
-            displayPaintings(data.data);
+            paintings = data.data;
+            renderPaintings();
         } else {
-            console.error("Error fetching paintings:", data.message);
+            alert(data.message);
         }
     })
-    .catch(error => console.error("Error loading paintings:", error));
+    .catch(error => console.error('Error fetching paintings:', error));
 }
 
-// Function to display paintings in the table
-function displayPaintings(paintings) {
-    const paintingList = document.getElementById('paintingList');
-    paintingList.innerHTML = '';
+// Function to add a new painting
+function submitPainting() {
+    const formData = new FormData();
+    formData.append("action", "insert");
+    formData.append("title", document.getElementById("title").value);
+    formData.append("artist", document.getElementById("artist").value);
+    formData.append("year", document.getElementById("year").value);
+    formData.append("image", document.getElementById("image").files[0]);
+
+    fetch("includes/manage_paintings.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            fetchPaintings(); // Refresh paintings
+            clearForm();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error adding painting:', error));
+}
+
+// Function to update an existing painting
+function updatePainting() {
+    const formData = new FormData();
+    formData.append("action", "update");
+    formData.append("id", document.getElementById("paintingId").value);
+    formData.append("title", document.getElementById("title").value);
+    formData.append("artist", document.getElementById("artist").value);
+    formData.append("year", document.getElementById("year").value);
+    
+    const imageFile = document.getElementById("image").files[0];
+    if (imageFile) {
+        formData.append("image", imageFile);
+    }
+
+    fetch("includes/manage_paintings.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            fetchPaintings(); // Refresh paintings
+            clearForm();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error updating painting:', error));
+}
+
+// Function to delete a painting
+function deletePainting() {
+    const id = document.getElementById("paintingId").value;
+    if (!id) {
+        alert("Please select a painting to delete.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("action", "delete");
+    formData.append("id", id);
+
+    fetch("includes/manage_paintings.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            fetchPaintings(); // Refresh paintings
+            clearForm();
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => console.error('Error deleting painting:', error));
+}
+
+// Function to display the paintings in the table
+function renderPaintings() {
+    const paintingList = document.getElementById("paintingList");
+    paintingList.innerHTML = ""; // Clear current display
 
     paintings.forEach(painting => {
-        const row = document.createElement('tr');
+        const row = document.createElement("tr");
+
         row.innerHTML = `
+
             <td>${painting.title}</td>
             <td>${painting.artist}</td>
             <td>${painting.year}</td>
-            <td>${painting.price}</td>
+            <td><img src="assets/img/${painting.image}" alt="${painting.title}" height="50"></td>
             <td>
-                <button onclick="editPainting(${painting.id})">Edit</button>
-                <button onclick="deletePainting(${painting.id})">Delete</button>
+                <button class="btn btn-sm btn-success" onclick="editPainting(${painting.id})">Edit</button>
             </td>
         `;
         paintingList.appendChild(row);
     });
 }
 
-// Helper function to collect data from the form and call addPainting
-function submitPainting() {
-    const title = document.getElementById('title').value;
-    const artist = document.getElementById('artist').value;
-    const year = document.getElementById('year').value;
-    const image = document.getElementById('image').files[0]; // Get file input
-
-    if (!title || !artist || !year) {
-        console.error("All fields are required.");
-        return;
+// Function to populate form for editing
+function editPainting(id) {
+    const painting = paintings.find(p => p.id === id);
+    if (painting) {
+        document.getElementById("paintingId").value = painting.id;
+        document.getElementById("title").value = painting.title;
+        document.getElementById("artist").value = painting.artist;
+        document.getElementById("year").value = painting.year;
+        document.getElementById("image").value = ""; // Clear the file input
     }
-
-    // Create a FormData object and append all fields including the file
-    const paintingData = new FormData();
-    paintingData.append('action', 'insert');
-    paintingData.append('title', title);
-    paintingData.append('artist', artist);
-    paintingData.append('year', year);
-    if (image) {
-        paintingData.append('image', image);
-    }
-
-    // Pass FormData to addPainting
-    addPainting(paintingData);
 }
 
-function addPainting(paintingData) {
-    fetch(apiUrl, {
-        method: 'POST',
-        body: paintingData
-    })
-    .then(response => response.text())
-    .then(text => {
-        console.log("Raw response from addPainting:", text); // Log the response to see what was returned
-
-        // Attempt to parse JSON
-        let data;
-        try {
-            data = JSON.parse(text);
-        } catch (error) {
-            console.error("Parsing error in addPainting:", error);
-            console.error("Server response was:", text); // Log what the response actually was
-            return;
-        }
-
-        if (data.success) {
-            loadPaintings(); // Refresh painting list
-        } else {
-            console.error("Error inserting painting:", data.message);
-        }
-    })
-    .catch(error => console.error("Error in addPainting:", error));
+// Function to clear the form fields
+function clearForm() {
+    document.getElementById("paintingId").value = "";
+    document.getElementById("title").value = "";
+    document.getElementById("artist").value = "";
+    document.getElementById("year").value = "";
+    document.getElementById("image").value = "";
 }
-
-

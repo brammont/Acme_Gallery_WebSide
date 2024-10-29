@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${painting.title}</td>
                 <td>${painting.artist}</td>
                 <td>${painting.year}</td>
-                <td><img src="assets/img/${painting.image}" alt="${painting.title}" width="100"></td>
+                <td><img src="assets/img/${painting.image} class="img-thumbnail"" alt="${painting.title} " ></td>
             `;
             tableBody.appendChild(row);
         });

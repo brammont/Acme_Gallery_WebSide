@@ -24,7 +24,7 @@ if ($conn->connect_error) {
 // Determine action type
 $action = $_POST['action'] ?? '';
 
-if ($action == 'insert') {
+if ($action == 'submitPainting') {
     // Handle insert action
     $title = $_POST['title'] ?? '';
     $artist = $_POST['artist'] ?? '';
@@ -50,7 +50,7 @@ if ($action == 'insert') {
         echo json_encode(["success" => false, "message" => "Missing required fields"]);
     }
 
-} elseif ($action == 'update') {
+} elseif ($action == 'updatePainting') {
     // Handle update action
     $id = $_POST['id'] ?? '';
     $title = $_POST['title'] ?? '';
@@ -81,7 +81,7 @@ if ($action == 'insert') {
         echo json_encode(["success" => false, "message" => "Missing required fields"]);
     }
 
-} elseif ($action == 'delete') {
+} elseif ($action == 'deletePainting') {
     // Handle delete action
     $id = $_POST['id'] ?? '';
 

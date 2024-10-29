@@ -15,7 +15,11 @@ html, body {
     flex: 1;
     height: 100%;
 }
-
+.table {
+    height: 50%;
+    width: 50%;
+    margin: 1.2rem;
+}
 .footer {
     background-color: #343a40;
     color: white;
@@ -81,4 +85,12 @@ html, body {
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6); /* Subtle shadow for contrast */
     margin-top: 10px;
     text-align: center;
+}
+img{
+    max-width: 50%;
+    max-height: 50%;
+    margin-bottom: 1.9rem;
+}
+h2{
+    margin: 5px;
 }
