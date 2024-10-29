@@ -101,11 +101,8 @@ function fetchAndDisplayData() {
                     <td>${painting.style || "N/A"}</td>
                     <td>${painting.year}</td>
                     <td>
-                        <button class="btn btn-success" type="button" data-toggle="collapse" data-target="#img${painting.title.replace(/\s/g, '')}" aria-expanded="false" aria-controls="img${painting.title.replace(/\s/g, '')}">
-                            Toggle Image
-                        </button>
-                        <div class="collapse" id="img${painting.title.replace(/\s/g, '')}">
-                            <img src="assets/img/${painting.image}" class="img-thumbnail" style="height: 50%; width: 50%" alt="${painting.title}">
+                        <div  id="img${painting.title.replace(/\s/g, '')}">
+                            <img src="assets/img/${painting.image}" class="img-fluid style="height: 50%; width: 50%" alt="${painting.title}">
                         </div>
                     </td>
                 `;
@@ -114,3 +111,154 @@ function fetchAndDisplayData() {
         })
         .catch(error => console.error("Error fetching paintings:", error));
 }
+
+// Function painting listing
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('controllers/PaintingController.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: 'action=getAllPaintings'
+    })
+    .then(response => response.json())
+    .then(data => {
+        const tableBody = document.querySelector('#paintingsTable tbody');
+        data.forEach(painting => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${painting.title}</td>
+                <td>${painting.artist}</td>
+                <td>${painting.year}</td>
+                <td><img src="assets/img/${painting.image} class="img-flued"" alt="${painting.title} " ></td>
+            `;
+            tableBody.appendChild(row);
+        });
+    });
+});
+
+// Function Manage Painting 
+function fetchPaintings() {
+    $.ajax({
+        url: 'includes/fetch_paintings.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const paintingList = $('#paintingList');
+            paintingList.empty();
+            data.forEach(painting => {
+                paintingList.append(`
+                    <tr>
+                        <td>${painting.title}</td>
+                        <td>${painting.artist}</td>
+                        <td>${painting.year}</td>
+                        <td><img src="assets/img/${painting.image}" alt="${painting.title}" width="100"></td>
+                        <td>
+                            <button class="btn btn-info" onclick="editPainting(${painting.id})">Edit</button>
+                        </td>
+                    </tr>
+                `);
+            });
+        },
+        error: function(xhr) {
+            console.error(xhr);
+        }
+    });
+}
+
+function addPainting() {
+    const formData = new FormData();
+    formData.append('action', 'insert');
+    formData.append('title', $('#title').val());
+    formData.append('artist', $('#artist').val());
+    formData.append('year', $('#year').val());
+    formData.append('image', $('#image')[0].files[0]);
+
+    $.ajax({
+        url: 'includes/manage_paintings.php',
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            alert(response.message);
+            fetchPaintings();
+            $('#paintingForm')[0].reset();
+        },
+        error: function(xhr) {
+            console.error(xhr);
+        }
+    });
+}
+
+function editPainting(id) {
+    $.ajax({
+        url: 'includes/fetch_paintings.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const painting = data.find(p => p.id === id);
+            if (painting) {
+                $('#paintingId').val(painting.id);
+                $('#title').val(painting.title);
+                $('#artist').val(painting.artist);
+                $('#year').val(painting.year);
+            }
+        },
+        error: function(xhr) {
+            console.error(xhr);
+        }
+    });
+}
+
+function updatePainting() {
+    const formData = new FormData();
+    formData.append('action', 'update');
+    formData.append('id', $('#paintingId').val());
+    formData.append('title', $('#title').val());
+    formData.append('artist', $('#artist').val());
+    formData.append('year', $('#year').val());
+    formData.append('image', $('#image')[0].files[0]);
+
+    $.ajax({
+        url: 'includes/manage_paintings.php',
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(response) {
+            alert(response.message);
+            fetchPaintings();
+            $('#paintingForm')[0].reset();
+        },
+        error: function(xhr) {
+            console.error(xhr);
+        }
+    });
+}
+
+function deletePainting() {
+    const id = $('#paintingId').val();
+    if (id) {
+        $.ajax({
+            url: 'includes/manage_paintings.php',
+            method: 'POST',
+            data: { action: 'delete', id: id },
+            success: function(response) {
+                alert(response.message);
+                fetchPaintings();
+                $('#paintingForm')[0].reset();
+            },
+            error: function(xhr) {
+                console.error(xhr);
+            }
+        });
+    } else {
+        alert('Please select a painting to delete.');
+    }
+}
+
+$(document).ready(function() {
+    fetchPaintings();
+});
+

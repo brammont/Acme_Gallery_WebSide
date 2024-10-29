@@ -1,31 +1,24 @@
 <?php
-// Set JSON content type
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 header('Content-Type: application/json');
+include 'fetch_paintings.php';
 
-// Suppress errors for JSON compatibility
-error_reporting(0);
-ini_set('display_errors', 0);
-
-// Database credentials
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "acme_gallery";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     echo json_encode(["success" => false, "message" => "Connection failed: " . $conn->connect_error]);
     exit();
 }
 
-// Determine action type
 $action = $_POST['action'] ?? '';
 
-if ($action == 'submitPainting') {
-    // Handle insert action
+if ($action == 'insertPainnting') {
     $title = $_POST['title'] ?? '';
     $artist = $_POST['artist'] ?? '';
     $year = $_POST['year'] ?? '';
@@ -35,7 +28,6 @@ if ($action == 'submitPainting') {
         $targetDir = "assets/img/";
         $targetFile = $targetDir . basename($image);
 
-        // Ensure file upload was successful
         if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
             $sql = "INSERT INTO paintings (title, artist, year, image) VALUES ('$title', '$artist', '$year', '$image')";
             if ($conn->query($sql) === TRUE) {
@@ -49,9 +41,7 @@ if ($action == 'submitPainting') {
     } else {
         echo json_encode(["success" => false, "message" => "Missing required fields"]);
     }
-
 } elseif ($action == 'updatePainting') {
-    // Handle update action
     $id = $_POST['id'] ?? '';
     $title = $_POST['title'] ?? '';
     $artist = $_POST['artist'] ?? '';
@@ -80,9 +70,7 @@ if ($action == 'submitPainting') {
     } else {
         echo json_encode(["success" => false, "message" => "Missing required fields"]);
     }
-
 } elseif ($action == 'deletePainting') {
-    // Handle delete action
     $id = $_POST['id'] ?? '';
 
     if ($id) {
@@ -95,24 +83,9 @@ if ($action == 'submitPainting') {
     } else {
         echo json_encode(["success" => false, "message" => "Missing painting ID"]);
     }
-
-} elseif ($action == 'fetch') {
-    // Handle fetch action
-    $sql = "SELECT * FROM paintings";
-    $result = $conn->query($sql);
-    $paintings = [];
-
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $paintings[] = $row;
-        }
-    }
-    echo json_encode(["success" => true, "data" => $paintings]);
-
 } else {
     echo json_encode(["success" => false, "message" => "Invalid action"]);
 }
 
-// Close connection
 $conn->close();
 ?>

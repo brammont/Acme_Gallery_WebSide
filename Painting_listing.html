@@ -41,13 +41,20 @@
                 <option value="year">Year</option>
             </select>
             <div class="results mt-5">
-                <h3>Search Results</h3>
-                <table  class="table table-responsive-lg" id="paintingTable">
+                <h2 class="my-4">Pictures List</h2>
+                <table class="table table-responsive-lg" id="searchResultsTable">
                     <thead>
-                        <tbody  id="paintingList">
-                                <!-- Data will be inserted here by JavaScript -->
-                        </tbody>  
+                        <tr id="paintingList">
+                            <th>Title</th>
+                            <th>Artist</th>
+                            <th>Year</th>
+                            <th>Image</th>
+                            
+                        </tr>
                     </thead>
+                    <tbody id="paintingList">
+                        <!-- Data will be dynamically injected here -->
+                    </tbody>
                 </table>
             </div>
         </div>

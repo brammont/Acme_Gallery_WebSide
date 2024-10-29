@@ -15,11 +15,7 @@ html, body {
     flex: 1;
     height: 100%;
 }
-.table {
-    height: 50%;
-    width: 50%;
-    margin: 1.2rem;
-}
+
 .footer {
     background-color: #343a40;
     color: white;

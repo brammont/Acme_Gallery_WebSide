@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 header('Content-Type: application/json');
 
 $servername = "localhost";
@@ -8,20 +10,13 @@ $dbname = "acme_gallery";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check for connection errors
 if ($conn->connect_error) {
     echo json_encode(["error" => "Connection failed: " . $conn->connect_error]);
     exit();
 }
 
-// Prepare SQL query and check for errors
-$sql = "SELECT title, artist, year, image FROM paintings";
+$sql = "SELECT id, title, artist, year, image FROM paintings";
 $result = $conn->query($sql);
-
-if ($result === false) {
-    echo json_encode(["error" => "SQL error: " . $conn->error]);
-    exit();
-}
 
 $paintings = [];
 if ($result->num_rows > 0) {
@@ -30,6 +25,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-echo json_encode($paintings);  // Always output JSON, even if empty
+echo json_encode($paintings);
 $conn->close();
 ?>
