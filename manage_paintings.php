@@ -16,36 +16,64 @@ if ($conn->connect_error) {
 }
 
 // Procesamiento del formulario
-$message = '';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $title = $_POST['title'] ?? '';
-    $artist = $_POST['artist'] ?? '';
-    $year = $_POST['year'] ?? '';
-    $image = $_FILES['image']['name'] ?? '';
+    $message = '';
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $title = $_POST['title'] ?? '';
+        $artist = $_POST['artist'] ?? '';
+        $year = $_POST['year'] ?? '';
+        $image = $_FILES['image']['name'] ?? '';
 
-    if ($title && $artist && $year && $image) {
-        $targetDir = "assets/img/";
-        $targetFile = $targetDir . basename($image);
+        if ($title && $artist && $year && $image) {
+            $targetDir = "assets/img/";
+            $targetFile = $targetDir . basename($image);
 
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
-            $sql = $conn->prepare("INSERT INTO paintings (title, artist, year, image) VALUES (?, ?, ?, ?)");
-            $sql->bind_param("ssis", $title, $artist, $year, $image);
-            
-            if ($sql->execute()) {
-                $message = "Pintura añadida correctamente";
+            if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                $sql = $conn->prepare("INSERT INTO paintings (title, artist, year, image) VALUES (?, ?, ?, ?)");
+                $sql->bind_param("ssis", $title, $artist, $year, $image);
+                
+                if ($sql->execute()) {
+                    $message = "Pintura añadida correctamente";
+                } else {
+                    $message = "Error en la base de datos: " . $conn->error;
+                }
             } else {
-                $message = "Error en la base de datos: " . $conn->error;
+                $message = "Error al mover el archivo cargado.";
             }
         } else {
-            $message = "Error al mover el archivo cargado.";
+            $message = "Por favor, completa todos los campos.";
         }
-    } else {
-        $message = "Por favor, completa todos los campos.";
-    }
-}
+    }elseif (isset($_POST['update'])) {
+            // Update painting
+            if ($painting_id && $title && $artist && $year) {
+                $sql = $conn->prepare("UPDATE paintings SET title=?, artist=?, year=? WHERE id=?");
+                $sql->bind_param("ssii", $title, $artist, $year, $painting_id);
 
-$conn->close();
-?>
+                if ($sql->execute()) {
+                    $message = "Painting updated successfully.";
+                } else {
+                    $message = "Database error: " . $conn->error;
+                }
+            } else {
+                $message = "Please complete all fields.";
+            }
+    }elseif (isset($_POST['delete'])) {
+        // Delete painting
+        if ($painting_id) {
+            $sql = $conn->prepare("DELETE FROM paintings WHERE id=?");
+            $sql->bind_param("i", $painting_id);
+
+            if ($sql->execute()) {
+                $message = "Painting deleted successfully.";
+            } else {
+                $message = "Database error: " . $conn->error;
+            }
+        } else {
+            $message = "Select a painting to delete.";
+        }
+    }
+
+    $conn->close();
+    ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -108,23 +136,34 @@ $conn->close();
                     <label for="image">Imagen</label>
                     <input type="file" class="form-control" id="image" name="image" required>
                 </div>
-                <button type="submit" class="btn btn-success">Add Pintura</button>
-                <button type="Update" class="btn btn-success">Update Pintura</button>
-                <button type="delete" class="btn btn-success">Delete Pintura</button>
+                <button type="submit" name="add" class="btn btn-success">Add Painting</button>
+                <button type="submit" name="update" class="btn btn-success">Update Painting</button>
+                <button type="submit" name="delete" class="btn btn-success">Delete Painting</button>
             </form>
             <div class="results mt-5">
-                <h2 class="my-4">Pictures List</h2>
-                <table class="table table-responsive-lg" id="searchResultsTable">
-                    <thead>
-                        
-                    <tbody id="paintingList2">
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>    
+        <h2 class="my-4">Lista de Pinturas</h2>
+        <table class="table table-responsive-lg" id="paintingTable">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Artista</th>
+                    <th>Año</th>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="paintingList2">
+            </tbody>
+        </table>    
     </div>
-
+    <script>
+    function editPainting(id, title, artist, year) {
+        document.getElementById('painting_id').value = id;
+        document.getElementById('title').value = title;
+        document.getElementById('artist').value = artist;
+        document.getElementById('year').value = year;
+    }
+</script>
 </main>
 <footer class="bg-dark text-white text-center text-lg-start mt-5">
     <div class="container p-4">

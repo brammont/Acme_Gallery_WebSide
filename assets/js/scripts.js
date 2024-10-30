@@ -25,14 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 paintings.sort((a, b) => a.year - b.year || a.artist.localeCompare(b.artist)).forEach(painting => {
                     let listItem = document.createElement("tr");
                     listItem.innerHTML = `
-                        <td>Tittle: <p>${painting.title}</p></td>
-                        <td>Artist: <p>${painting.artist}</p></td>
-                        <td>Year: <p>${painting.year}</p></td>
-                        <td>
-                            <div id="img${painting.title.replace(/\s/g, '')}">
-                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
-                            </div>
-                        </td>`;
+                    <tr>
+                    <td>${painting.title}</td>
+                     <td>${painting.artist}</td>
+                     <td>${painting.year}</td>
+                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
+                     </tr>`;
                     paintingList.appendChild(listItem);
                 });
             } catch (error) {
@@ -61,14 +59,12 @@ function sortTable() {
             data.forEach(painting => {
                 let listItem = document.createElement("tr");
                 listItem.innerHTML = `
-                    <td>Title: <p>${painting.title}</p></td>
-                        <td>Artist: <p>${painting.artist}</p></td>
-                        <td>Year: <p>${painting.year}</p></td>
-                        <td>
-                            <div id="img${painting.title.replace(/\s/g, '')}">
-                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
-                            </div>
-                        </td>`;
+                <tr>
+                    <td>${painting.title}</td>
+                     <td>${painting.artist}</td>
+                     <td>${painting.year}</td>
+                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
+                     </tr>`;
                 paintingList.appendChild(listItem);
             });
         })
@@ -108,14 +104,12 @@ function fetchAndDisplayData() {
             data.forEach(painting => {
                 let listItem = document.createElement("tr");
                 listItem.innerHTML = `
-                    <td>Tittle: <p>${painting.title}</p></td>
-                        <td>Artist: <p>${painting.artist}</p></td>
-                        <td>Year: <p>${painting.year}</p></td>
-                        <td>
-                            <div id="img${painting.title.replace(/\s/g, '')}">
-                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
-                            </div>
-                        </td>`;
+                <tr>
+                    <td>${painting.title}</td>
+                     <td>${painting.artist}</td>
+                     <td>${painting.year}</td>
+                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
+                    </tr>`;
                 paintingList.appendChild(listItem);
             });
         }
@@ -143,14 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
         data.paintings.forEach(painting => { // Ensure you access 'data.paintings' 
             let listItem = document.createElement("tr");
                     listItem.innerHTML = `
-                        <td>Title: ${painting.title}</td>
-                        <td>Artist: ${painting.artist}</td>
-                        <td>Year: ${painting.year}</td>
-                        <td>
-                            <div id="img${painting.title.replace(/\s/g, '')}">
-                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
-                            </div>
-                        </td>`;
+                    <tr>
+                    <td>${painting.title}</td>
+                     <td>${painting.artist}</td>
+                     <td>${painting.year}</td>
+                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
+                     </tr>`;
             tableBody.appendChild(listItem);
         });
     })
@@ -167,18 +159,13 @@ function fetchPaintings() {
             paintingList.empty();
             data.forEach(painting => {
                 paintingList.append(`
-                    <tr>
-                        <td>Title: <p>${painting.title}</p></td>
-                        <td>Artist: <p>${painting.artist}</p></td>
-                        <td>Year: <p>${painting.year}</p></td>
-                        <td>
-                            <div id="img${painting.title.replace(/\s/g, '')}">
-                                <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
-                            </div>
-                        </td>
-                        <td> <button type="edit" class="btn btn-success">Edit Pintura</button></td>
-                      </tr>  
-                `);
+            "<tr>
+                "<td>${painting.title}</td>";
+                 "<td>${painting.artist}</td>";
+                 "<td>${painting.year}</td>";
+                 "<td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>";
+                 "<td><button class='btn btn-info' onclick='editPainting({${painting.id}}, \"{${painting.title}}\", \"{${painting.artist}}\", {${painting.year}})'>Edit</button></td>";
+            "</tr>`);
             });
         },
         error: function(xhr) {
@@ -186,6 +173,7 @@ function fetchPaintings() {
         }
     });
 }
+
 
 window.onload = () => {
     fetchPaintings();
