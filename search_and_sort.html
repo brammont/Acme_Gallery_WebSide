@@ -29,37 +29,39 @@
                 <a class="nav-link active" href="search_and_sort.html">Search and Sort</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="insert_update_delete.html">Painting Management</a>
+                <a class="nav-link" href="manage_paintings.php">Painting Management</a>
             </li>
         </ul>
     </div>
 </nav>
 <main>
     <div class="container">
-        <h1 class="my-4">Search Paintings</h1>
+            <h1 class="my-4">Search Paintings</h1>
+        <div>
+            <!-- Search and Sort Form -->
+            <form id="searchForm">
+                <div class="form-group">
+                    <label for="searchTitle">Search by Title:</label>
+                    <input type="text" class="form-control" id="searchTitle" placeholder="Enter painting title" oninput="fetchAndDisplayData()">
+                
+                    <label for="searchArtist">Search by Artist:</label>
+                    <input type="text" class="form-control" id="searchArtist" placeholder="Enter artist name" oninput="fetchAndDisplayData()">
+                
+                    <label for="searchYear">Search by Year:</label>
+                    <input type="number" class="form-control" id="searchYear" placeholder="Enter year" oninput="fetchAndDisplayData()">
+                </div>
 
-        <!-- Search and Sort Form -->
-        <form id="searchForm">
-            <div class="form-group">
-                <label for="searchTitle">Search by Title:</label>
-                <input type="text" class="form-control" id="searchTitle" placeholder="Enter painting title" oninput="fetchAndDisplayData()">
-            
-                <label for="searchArtist">Search by Artist:</label>
-                <input type="text" class="form-control" id="searchArtist" placeholder="Enter artist name" oninput="fetchAndDisplayData()">
-            
-                <label for="searchYear">Search by Year:</label>
-                <input type="number" class="form-control" id="searchYear" placeholder="Enter year" oninput="fetchAndDisplayData()">
+                <button type="button" class="btn btn-success" onclick="fetchAndDisplayData()">Search</button>
+            </form>
+        
+            <div class="results mt-5">
+                <h2 class="my-4">Search Results</h2>
+                <table class="table table-responsive-lg" id="searchResultsTable">
+                    <tbody id="paintingList">
+                        <!-- Data will be dynamically injected here -->
+                    </tbody>
+                </table>
             </div>
-
-            <button type="button" class="btn btn-success" onclick="fetchAndDisplayData()">Search</button>
-        </form>
-        <div class="results mt-5">
-            <h2 class="my-4">Search Results</h2>
-            <table class="table table-responsive-lg" id="searchResultsTable">
-                <tbody id="paintingList">
-                    <!-- Data will be dynamically injected here -->
-                </tbody>
-            </table>
         </div>
     </div>
 </main>

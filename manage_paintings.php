@@ -78,40 +78,96 @@ $conn->close();
                     <a class="nav-link" href="search_and_sort.html">Search and Sort</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="insert_update_delete.html">Painting Management</a>
+                    <a class="nav-link" href="manage_paintings.php">Painting Management</a>
                 </li>
             </ul>
         </div>
     </nav>
-<main class="container mt-5">
-    <h2>Gestión de Pinturas</h2>
+<main>
+    <div class= "container">
+        <h2>Gestión de Pinturas</h2>
 
-    <?php if ($message): ?>
-        <div class="alert alert-info"><?php echo $message; ?></div>
-    <?php endif; ?>
+        <?php if ($message): ?>
+            <div class="alert alert-info"><?php echo $message; ?></div>
+        <?php endif; ?>
+        <div class="form-group">
+            <form action="manage_paintings.php" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="title">Título</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="artist">Artista</label>
+                    <input type="text" class="form-control" id="artist" name="artist" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Año</label>
+                    <input type="number" class="form-control" id="year" name="year" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Imagen</label>
+                    <input type="file" class="form-control" id="image" name="image" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Pintura</button>
+                <button type="Update" class="btn btn-primary">Update Pintura</button>
+                <button type="delete" class="btn btn-primary">Delete Pintura</button>
+            </form>
+            <div class="results mt-5">
+                <h2 class="my-4">Pictures List</h2>
+                <table class="table table-responsive-lg" id="searchResultsTable">
+                    <thead>
+                        
+                    <tbody id="paintingList">
+                        <!-- Data will be dynamically injected here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+    </div>
 
-    <form action="manage_paintings.php" method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="title">Título</label>
-            <input type="text" class="form-control" id="title" name="title" required>
-        </div>
-        <div class="form-group">
-            <label for="artist">Artista</label>
-            <input type="text" class="form-control" id="artist" name="artist" required>
-        </div>
-        <div class="form-group">
-            <label for="year">Año</label>
-            <input type="number" class="form-control" id="year" name="year" required>
-        </div>
-        <div class="form-group">
-            <label for="image">Imagen</label>
-            <input type="file" class="form-control" id="image" name="image" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Add Pintura</button>
-        <button type="Update" class="btn btn-primary">Update Pintura</button>
-        <button type="delete" class="btn btn-primary">Delete Pintura</button>
-    </form>
 </main>
-
+<footer class="bg-dark text-white text-center text-lg-start mt-5">
+    <div class="container p-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Sudakaz IT Services</h5>
+                <p>
+                    Your trusted partner in IT services. We provide comprehensive solutions tailored to meet the needs of modern businesses.
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Quick Links</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="index.html" class="text-white">Home</a>
+                    </li>
+                    <li>
+                        <a href="contact.html" class="text-white">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-uppercase">Follow Us</h5>
+                <ul class="list-unstyled mb-0">
+                    <li>
+                        <a href="https://www.facebook.com/" target="_blank" class="text-white">Facebook</a>
+                    </li>
+                    <li>
+                        <a href="https://x.com/?lang=en" target="_blank" class="text-white">Twitter</a>
+                    </li>
+                    <li>
+                        <a href="https://au.linkedin.com/" target="_blank" class="text-white">LinkedIn</a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/" target="_blank" class="text-white">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="text-center p-3 bg-secondary">
+        © 2024 Sudakaz IT Services. All rights reserved.
+    </div>
+</footer>
 </body>
 </html>
