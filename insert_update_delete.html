@@ -37,7 +37,7 @@
 <main>
     <div class="container mt-5">
         <h2>Painting Management</h2>
-        <form id="paintingForm">
+        <form action="includes/manage_paintings.php" id="paintingForm"  method="post">
             <input type="hidden" id="paintingId">
             <div class="form-group">
                 <label for="title">Title</label>
@@ -55,7 +55,7 @@
                 <label for="image">Image</label>
                 <input type="file" class="form-control" id="image">
             </div>
-            <button type="button" class="btn btn-success" onclick="addPainting()">Add Painting</button>
+            <button type="button" class="btn btn-success" >Add Painting</button>
             <button type="button" class="btn btn-success" onclick="updatePainting()">Update Painting</button>
             <button type="button" class="btn btn-success" onclick="deletePainting()">Delete Painting</button>
         </form>

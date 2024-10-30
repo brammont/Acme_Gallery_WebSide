@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 
 $action = $_POST['action'] ?? '';
 
-if ($action == 'insertPainnting') {
+if ($action == 'insertPainting') { // Fixed typo: 'insertPainting' instead of 'insertPainnting'
     $title = $_POST['title'] ?? '';
     $artist = $_POST['artist'] ?? '';
     $year = $_POST['year'] ?? '';
