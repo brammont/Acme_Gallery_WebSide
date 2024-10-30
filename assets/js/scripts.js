@@ -195,7 +195,7 @@ function addPainting() {
     formData.append('image', $('#image')[0].files[0]);
 
     $.ajax({
-        url: 'includes/fecth_paintings.php',
+        url: 'includes/fetch_paintings.php',
         method: 'POST',
         data: formData,
         contentType: false,
@@ -241,7 +241,7 @@ function updatePainting() {
     formData.append('image', $('#image')[0].files[0]);
 
     $.ajax({
-        url: 'includes/manage_paintings.php',
+        url: 'includes/fetch_paintings.php',
         method: 'POST',
         data: formData,
         contentType: false,
