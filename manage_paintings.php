@@ -108,17 +108,17 @@ $conn->close();
                     <label for="image">Imagen</label>
                     <input type="file" class="form-control" id="image" name="image" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Add Pintura</button>
-                <button type="Update" class="btn btn-primary">Update Pintura</button>
-                <button type="delete" class="btn btn-primary">Delete Pintura</button>
+                <button type="submit" class="btn btn-success">Add Pintura</button>
+                <button type="Update" class="btn btn-success">Update Pintura</button>
+                <button type="delete" class="btn btn-success">Delete Pintura</button>
             </form>
             <div class="results mt-5">
                 <h2 class="my-4">Pictures List</h2>
                 <table class="table table-responsive-lg" id="searchResultsTable">
                     <thead>
                         
-                    <tbody id="paintingList">
-                        <!-- Data will be dynamically injected here -->
+                    <tbody id="paintingList2">
+                        
                     </tbody>
                 </table>
             </div>
