@@ -138,8 +138,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         return response.json();
     })
-    .then(data => {
-        const tableBody = document.querySelector('#paintingsTable tbody');
+    .finally(data => {
+        const tableBody = document.querySelector('#paintingList tbody');
         data.paintings.forEach(painting => { // Ensure you access 'data.paintings' 
             let listItem = document.createElement("tr");
                     listItem.innerHTML = `
@@ -278,7 +278,9 @@ function deletePainting() {
     }
 }
 
-$(document).ready(function() {
-    fetchPaintings();
-});
 
+
+window.onload = () => {
+    fetchPaintings();
+
+}
