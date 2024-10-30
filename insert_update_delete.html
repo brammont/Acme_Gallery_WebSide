@@ -23,13 +23,13 @@
                 <a class="nav-link" href="index.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="painting_listing.html">Painting Listing</a>
+                <a class="nav-link active" href="painting_listing.html">Painting Listing</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="search_and_sort.html">Search and Sort</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="insert_update_delete.html">Painting Management</a>
+                <a class="nav-link" href="insert_update_delete.html">Painting Management</a>
             </li>
         </ul>
     </div>
@@ -55,10 +55,11 @@
                 <label for="image">Image</label>
                 <input type="file" class="form-control" id="image">
             </div>
-            <button type="button" class="btn btn-success" onclick="addPainting()">Add Painting</button>
+            
+        </form>
+        <button type="button" class="btn btn-success" onclick="addPainting()">Add Painting</button>
             <button type="button" class="btn btn-success" onclick="updatePainting()">Update Painting</button>
             <button type="button" class="btn btn-success" onclick="deletePainting()">Delete Painting</button>
-        </form>
         <hr>
         
         <div class="results mt-5">

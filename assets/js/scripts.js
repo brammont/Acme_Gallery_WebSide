@@ -143,9 +143,9 @@ document.addEventListener('DOMContentLoaded', function() {
         data.paintings.forEach(painting => { // Ensure you access 'data.paintings' 
             let listItem = document.createElement("tr");
                     listItem.innerHTML = `
-                        <td>Title: <p>${painting.title}</p></td>
-                        <td>Artist: <p>${painting.artist}</p></td>
-                        <td>Year: <p>${painting.year}</p></td>
+                        <td>Title: ${painting.title}</td>
+                        <td>Artist: ${painting.artist}</td>
+                        <td>Year: ${painting.year}</td>
                         <td>
                             <div id="img${painting.title.replace(/\s/g, '')}">
                                 <img src="assets/img/${painting.image}" class="img-fluid" style="height: 50%; width: 50%;" alt="${painting.title}">
@@ -188,14 +188,14 @@ function fetchPaintings() {
 
 function addPainting() {
     const formData = new FormData();
-    formData.append('action', 'insert');
+    formData.append('action', 'insertPaiting');
     formData.append('title', $('#title').val());
     formData.append('artist', $('#artist').val());
     formData.append('year', $('#year').val());
     formData.append('image', $('#image')[0].files[0]);
 
     $.ajax({
-        url: 'includes/fetch_paintings.php',
+        url: 'includes/manage_paintings.php',
         method: 'POST',
         data: formData,
         contentType: false,
@@ -213,7 +213,7 @@ function addPainting() {
 
 function editPainting(id) {
     $.ajax({
-        url: 'includes/fetch_paintings.php',
+        url: 'includes/manage_paintings.php',
         method: 'GET',
         dataType: 'json',
         success: function(data) {
@@ -233,7 +233,7 @@ function editPainting(id) {
 
 function updatePainting() {
     const formData = new FormData();
-    formData.append('action', 'update');
+    formData.append('action', 'updatePainting');
     formData.append('id', $('#paintingId').val());
     formData.append('title', $('#title').val());
     formData.append('artist', $('#artist').val());
@@ -241,7 +241,7 @@ function updatePainting() {
     formData.append('image', $('#image')[0].files[0]);
 
     $.ajax({
-        url: 'includes/fetch_paintings.php',
+        url: 'includes/manage_paintings.php',
         method: 'POST',
         data: formData,
         contentType: false,
@@ -261,9 +261,9 @@ function deletePainting() {
     const id = $('#paintingId').val();
     if (id) {
         $.ajax({
-            url: 'includes/fetch_paintings.php',
+            url: 'includes/manage_paintings.php',
             method: 'POST',
-            data: { action: 'delete', id: id },
+            data: { action: 'deletePainting', id: id },
             success: function(response) {
                 alert(response.message);
                 fetchPaintings();
