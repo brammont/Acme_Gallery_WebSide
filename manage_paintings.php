@@ -16,64 +16,69 @@ if ($conn->connect_error) {
 }
 
 // Procesamiento del formulario
-    $message = '';
+$message = '';
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Get form input values
         $title = $_POST['title'] ?? '';
         $artist = $_POST['artist'] ?? '';
         $year = $_POST['year'] ?? '';
         $image = $_FILES['image']['name'] ?? '';
+        $painting_id = $_POST['painting_id'] ?? ''; // Painting ID for update/delete operations
 
-        if ($title && $artist && $year && $image) {
+        // Check if the 'add' button was pressed and required fields are filled
+        if (isset($_POST['add']) && $title && $artist && $year && $image) {
+            // Directory to store the uploaded image
             $targetDir = "assets/img/";
             $targetFile = $targetDir . basename($image);
 
+            // Move the uploaded file to the target directory
             if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFile)) {
+                // Prepare and execute the INSERT query
                 $sql = $conn->prepare("INSERT INTO paintings (title, artist, year, image) VALUES (?, ?, ?, ?)");
                 $sql->bind_param("ssis", $title, $artist, $year, $image);
-                
+
+                // Check if the INSERT was successful
                 if ($sql->execute()) {
-                    $message = "Pintura añadida correctamente";
+                    $message = "Painting added successfully.";
                 } else {
-                    $message = "Error en la base de datos: " . $conn->error;
+                    $message = "Database error: " . $conn->error;
                 }
             } else {
-                $message = "Error al mover el archivo cargado.";
+                $message = "Error moving the uploaded file.";
             }
-        } else {
-            $message = "Por favor, completa todos los campos.";
-        }
-    }elseif (isset($_POST['update'])) {
-            // Update painting
+        }  elseif (isset($_POST['update'])) {
+            // Logic to update painting
             if ($painting_id && $title && $artist && $year) {
                 $sql = $conn->prepare("UPDATE paintings SET title=?, artist=?, year=? WHERE id=?");
                 $sql->bind_param("ssii", $title, $artist, $year, $painting_id);
 
                 if ($sql->execute()) {
-                    $message = "Painting updated successfully.";
+                    $message = "Pintura actualizada correctamente.";
                 } else {
-                    $message = "Database error: " . $conn->error;
+                    $message = "Error en la base de datos: " . $conn->error;
                 }
             } else {
-                $message = "Please complete all fields.";
+                $message = "Por favor, completa todos los campos.";
             }
-    }elseif (isset($_POST['delete'])) {
-        // Delete painting
-        if ($painting_id) {
-            $sql = $conn->prepare("DELETE FROM paintings WHERE id=?");
-            $sql->bind_param("i", $painting_id);
+        } elseif (isset($_POST['delete'])) {
+            // Logic to delete painting
+            if ($painting_id && $title && $artist && $year ) {
+                $sql = $conn->prepare("DELETE FROM paintings WHERE id=?");
+                $sql->bind_param("i", $painting_id);
 
-            if ($sql->execute()) {
-                $message = "Painting deleted successfully.";
+                if ($sql->execute()) {
+                    $message = "Pintura eliminada correctamente.";
+                } else {
+                    $message = "Error en la base de datos: " . $conn->error;
+                }
             } else {
-                $message = "Database error: " . $conn->error;
+                $message = "Selecciona una pintura para eliminar.";
             }
-        } else {
-            $message = "Select a painting to delete.";
         }
     }
 
-    $conn->close();
-    ?>
+$conn->close();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -112,58 +117,47 @@ if ($conn->connect_error) {
         </div>
     </nav>
 <main>
-    <div class= "container">
-        <h2>Gestión de Pinturas</h2>
+<div class="container">
+        <h2>Painting Management</h2>
 
         <?php if ($message): ?>
             <div class="alert alert-info"><?php echo $message; ?></div>
         <?php endif; ?>
-        <div class="form-group">
-            <form action="manage_paintings.php" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="title">Título</label>
-                    <input type="text" class="form-control" id="title" name="title" required>
-                </div>
-                <div class="form-group">
-                    <label for="artist">Artista</label>
-                    <input type="text" class="form-control" id="artist" name="artist" required>
-                </div>
-                <div class="form-group">
-                    <label for="year">Año</label>
-                    <input type="number" class="form-control" id="year" name="year" required>
-                </div>
-                <div class="form-group">
-                    <label for="image">Imagen</label>
-                    <input type="file" class="form-control" id="image" name="image" required>
-                </div>
-                <button type="submit" name="add" class="btn btn-success">Add Painting</button>
-                <button type="submit" name="update" class="btn btn-success">Update Painting</button>
-                <button type="submit" name="delete" class="btn btn-success">Delete Painting</button>
-            </form>
-            <div class="results mt-5">
-        <h2 class="my-4">Lista de Pinturas</h2>
-        <table class="table table-responsive-lg" id="paintingTable">
-            <thead>
-                <tr>
-                    <th>Título</th>
-                    <th>Artista</th>
-                    <th>Año</th>
-                    <th>Imagen</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="paintingList2">
-            </tbody>
-        </table>    
+        
+        <form action="manage_paintings.php" method="post" enctype="multipart/form-data">
+            <!-- Hidden field to store painting ID for update/delete -->
+            <input type="hidden" id="painting_id" name="painting_id">
+
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="artist">Artist</label>
+                <input type="text" class="form-control" id="artist" name="artist" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <input type="number" class="form-control" id="year" name="year" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" class="form-control" id="image" name="image">
+            </div>
+
+            <button type="submit" name="add" class="btn btn-success">Add Painting</button>
+            <button type="submit" name="update" class="btn btn-success">Update Painting</button>
+            <button type="submit" name="delete" class="btn btn-success">Delete Painting</button>
+        </form>
+
+        <div class="results mt-5">
+            <h2 class="my-4">Lista de Pinturas</h2>
+            <table class="table table-responsive-lg" id="paintingTable">
+                <tbody id="paintingList2">
+                </tbody>
+            </table>
+        </div>
     </div>
-    <script>
-    function editPainting(id, title, artist, year) {
-        document.getElementById('painting_id').value = id;
-        document.getElementById('title').value = title;
-        document.getElementById('artist').value = artist;
-        document.getElementById('year').value = year;
-    }
-</script>
 </main>
 <footer class="bg-dark text-white text-center text-lg-start mt-5">
     <div class="container p-4">
@@ -208,5 +202,41 @@ if ($conn->connect_error) {
         © 2024 Sudakaz IT Services. All rights reserved.
     </div>
 </footer>
+<script>
+function fetchPaintings() {
+    $.ajax({
+        url: 'includes/fetch_paintings.php',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            const paintingList = $('#paintingList2');
+            paintingList.empty();
+            data.forEach(painting => {
+                paintingList.append(`
+                <tr>
+                    <td>${painting.title}</td>
+                    <td>${painting.artist}</td>
+                    <td>${painting.year}</td>
+                    <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
+                    <td><button class='btn btn-success' onclick='editPainting("${painting.id}", "${painting.title}", "${painting.artist}", "${painting.year}")'>Edit</button></td>
+                </tr>`);
+            });
+        },
+        error: function(xhr) {
+            console.error(xhr);
+        }
+    });
+}
+
+// Function to edit painting
+function editPainting(id, title, artist, year) {
+    document.getElementById('painting_id').value = id;
+    document.getElementById('title').value = title;
+    document.getElementById('artist').value = artist;
+    document.getElementById('year').value = year;
+}
+
+fetchPaintings(); // Fetch paintings on page load
+</script>
 </body>
 </html>

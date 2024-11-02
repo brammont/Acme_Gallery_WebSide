@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return response.json();
     })
     .finally(data => {
-        const tableBody = document.querySelector('#paintingList tbody');
+        const paintingList = document.querySelector('#paintingList tbody');
         data.paintings.forEach(painting => { // Ensure you access 'data.paintings' 
             let listItem = document.createElement("tr");
                     listItem.innerHTML = `
@@ -143,36 +143,13 @@ document.addEventListener('DOMContentLoaded', function() {
                      <td>${painting.year}</td>
                      <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
                      </tr>`;
-            tableBody.appendChild(listItem);
+                     paintingList.appendChild(listItem);
         });
     })
 });
 
 // Function Manage Painting 
-function fetchPaintings() {
-    $.ajax({
-        url: 'includes/fetch_paintings.php',
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            const paintingList = $('#paintingList2');
-            paintingList.empty();
-            data.forEach(painting => {
-                paintingList.append(`
-            "<tr>
-                "<td>${painting.title}</td>";
-                 "<td>${painting.artist}</td>";
-                 "<td>${painting.year}</td>";
-                 "<td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>";
-                 "<td><button class='btn btn-info' onclick='editPainting({${painting.id}}, \"{${painting.title}}\", \"{${painting.artist}}\", {${painting.year}})'>Edit</button></td>";
-            "</tr>`);
-            });
-        },
-        error: function(xhr) {
-            console.error(xhr);
-        }
-    });
-}
+
 
 
 window.onload = () => {
