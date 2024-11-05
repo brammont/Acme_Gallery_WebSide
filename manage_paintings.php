@@ -90,6 +90,30 @@ $conn->close();
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="assets/js/scripts.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .painting-card {
+            display: flex;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .painting-image {
+            width: 150px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .painting-details {
+            flex: 1;
+        }
+        .painting-details h5 {
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -108,14 +132,14 @@ $conn->close();
                     <a class="nav-link" href="painting_listing.html">Painting Listing</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="search_and_sort.html">Search and Sort</a>
+                    <a class="nav-link" href="search_paintings.html">Search Paintings</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="manage_paintings.php">Painting Management</a>
                 </li>
             </ul>
         </div>
-    </nav>
+</nav>
 <main>
 <div class="container">
         <h2>Painting Management</h2>
@@ -213,13 +237,17 @@ function fetchPaintings() {
             paintingList.empty();
             data.forEach(painting => {
                 paintingList.append(`
-                <tr>
-                    <td>${painting.title}</td>
-                    <td>${painting.artist}</td>
-                    <td>${painting.year}</td>
-                    <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
-                    <td><button class='btn btn-success' onclick='editPainting("${painting.id}", "${painting.title}", "${painting.artist}", "${painting.year}")'>Edit</button></td>
-                </tr>`);
+                <div class="painting-card">
+                    <img src='assets/img/${painting.image}' alt='${painting.title}' class="painting-image">
+                    <div class="painting-details">
+                        <h5>${painting.title}</h5>
+                        <p><strong>Finished:</strong> ${painting.year}</p>
+                        <p><strong>Paint Media:</strong> ${painting.media}</p>
+                        <p><strong>Artist Name:</strong> ${painting.artist}</p>
+                        <p><strong>Style:</strong> ${painting.style}</p>
+                        <button class="btn btn-success" onclick='editPainting("${painting.id}", "${painting.title}", "${painting.artist}", "${painting.year}")'>Edit</button>
+                    </div>
+                </div>`);
             });
         },
         error: function(xhr) {
@@ -227,6 +255,7 @@ function fetchPaintings() {
         }
     });
 }
+
 
 // Function to edit painting
 function editPainting(id, title, artist, year) {

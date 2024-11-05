@@ -6,6 +6,29 @@
     <title>Painting Listing - Acme Arts</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .painting-card {
+            display: flex;
+            margin: 20px 0;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .painting-image {
+            width: 150px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .painting-details {
+            flex: 1;
+        }
+        .painting-details h5 {
+            margin: 0;
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -22,7 +45,7 @@
                 <a class="nav-link active" href="painting_listing.html">Painting Listing</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="search_and_sort.html">Search and Sort</a>
+                <a class="nav-link" href="search_paintings.html">Search and Sort</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="manage_paintings.php">Painting Management</a>
@@ -48,7 +71,7 @@
                     <tbody id="paintingList">
                         <!-- Data will be dynamically injected here -->
                     </tbody>
-                </table>
+                </table>z
             </div>
         </div>
     </div>

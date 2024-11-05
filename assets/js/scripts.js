@@ -23,14 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Sort and display paintings by year and artist
                 paintings.sort((a, b) => a.year - b.year || a.artist.localeCompare(b.artist)).forEach(painting => {
-                    let listItem = document.createElement("tr");
+                    let listItem = document.createElement("div");
                     listItem.innerHTML = `
-                    <tr>
-                    <td>${painting.title}</td>
-                     <td>${painting.artist}</td>
-                     <td>${painting.year}</td>
-                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
-                     </tr>`;
+                    <div class="painting-card">
+                    <img src='assets/img/${painting.image}' alt='${painting.title}' class="painting-image">
+                    <div class="painting-details">
+                        <h5>${painting.title}</h5>
+                        <p><strong>Year:</strong> ${painting.year}</p>
+                        <p><strong>Paint Media:</strong> ${painting.media}</p>
+                        <p><strong>Artist Name:</strong> ${painting.artist}</p>
+                        <p><strong>Style:</strong> ${painting.style}</p>`;
                     paintingList.appendChild(listItem);
                 });
             } catch (error) {
@@ -59,12 +61,14 @@ function sortTable() {
             data.forEach(painting => {
                 let listItem = document.createElement("tr");
                 listItem.innerHTML = `
-                <tr>
-                    <td>${painting.title}</td>
-                     <td>${painting.artist}</td>
-                     <td>${painting.year}</td>
-                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
-                     </tr>`;
+                <div class="painting-card">
+                    <img src='assets/img/${painting.image}' alt='${painting.title}' class="painting-image">
+                    <div class="painting-details">
+                        <h5>${painting.title}</h5>
+                        <p><strong>Year:</strong> ${painting.year}</p>
+                        <p><strong>Paint Media:</strong> ${painting.media}</p>
+                        <p><strong>Artist Name:</strong> ${painting.artist}</p>
+                        <p><strong>Style:</strong> ${painting.style}</p>`;
                 paintingList.appendChild(listItem);
             });
         })
@@ -104,12 +108,14 @@ function fetchAndDisplayData() {
             data.forEach(painting => {
                 let listItem = document.createElement("tr");
                 listItem.innerHTML = `
-                <tr>
-                    <td>${painting.title}</td>
-                     <td>${painting.artist}</td>
-                     <td>${painting.year}</td>
-                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
-                    </tr>`;
+                <div class="painting-card">
+                    <img src='assets/img/${painting.image}' alt='${painting.title}' class="painting-image">
+                    <div class="painting-details">
+                        <h5>${painting.title}</h5>
+                        <p><strong>Year:</strong> ${painting.year}</p>
+                        <p><strong>Paint Media:</strong> ${painting.media}</p>
+                        <p><strong>Artist Name:</strong> ${painting.artist}</p>
+                        <p><strong>Style:</strong> ${painting.style}</p>`;
                 paintingList.appendChild(listItem);
             });
         }
@@ -137,12 +143,14 @@ document.addEventListener('DOMContentLoaded', function() {
         data.paintings.forEach(painting => { // Ensure you access 'data.paintings' 
             let listItem = document.createElement("tr");
                     listItem.innerHTML = `
-                    <tr>
-                    <td>${painting.title}</td>
-                     <td>${painting.artist}</td>
-                     <td>${painting.year}</td>
-                     <td><img src='assets/img/${painting.image}' alt='${painting.title}' width='50'></td>
-                     </tr>`;
+                    <div class="painting-card">
+                    <img src='assets/img/${painting.image}' alt='${painting.title}' class="painting-image">
+                    <div class="painting-details">
+                        <h5>${painting.title}</h5>
+                        <p><strong>Year:</strong> ${painting.year}</p>
+                        <p><strong>Paint Media:</strong> ${painting.media}</p>
+                        <p><strong>Artist Name:</strong> ${painting.artist}</p>
+                        <p><strong>Style:</strong> ${painting.style}</p>`;
                      paintingList.appendChild(listItem);
         });
     })
